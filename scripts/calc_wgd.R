@@ -35,8 +35,7 @@ get_args <- function() {
     p$add_argument("cf", help = "Clonal frequency (purity)")
     p$add_argument("ploidy", help = "Ploidy")
 
-    p$add_argument("pdf", help = "output plot pdf")
-    p$add_argument("rdata", help = "output workspace RData")
+    p$add_argument("wgd", help = "output wgd tsv")
 
     return(p$parse_args())
 }
@@ -51,6 +50,7 @@ main <- function() {
     print("[LOG] ploidy") 
     print(ploidy)
     bb <- readCnTable(argv$cn, clonal_freq) # cn_path
+    out_path <- argv$wgd
     
     # get WGD status
     hom <- averageHom(bb)
@@ -60,19 +60,13 @@ main <- function() {
     print("[LOG] isWgd")
     print(isWgd)
 
-    # run MutationTimeR functions
-    mt <- mutationTime(vcf, bb, isWgd=isWgd, n.boot=10) # TODO: add cluster
-    vcf <- addMutTime(vcf, mt$V)
-    mcols(bb) <- cbind(mcols(bb), mt$T)
-    
-    # save RData
-    save(list=ls(all.names=TRUE), file=argv$rdata, 
-         envir=environment())
+    # save output
+    LOH <- c(hom)
+    Ploidy <- c(ploidy)
+    WGD <- c(isWgd)
 
-    # plot output
-    pdf(argv$pdf, height=8, width=10, useDingbats=FALSE)
-    plotSample(vcf, bb)
-    dev.off()
+    df <- data.frame(LOH, Ploidy, WGD)
+    write.table(df, out_path, row.names=F, quote=F, sep="\t")
 }
 
 main()

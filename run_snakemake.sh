@@ -7,9 +7,9 @@ base_dir=$(realpath $indir)
 
 CLUSTER_CMD=("bsub -n {threads} -R {cluster.resources} -M {cluster.memory} -o {cluster.output} -J {cluster.name} -W {cluster.time}")
 
-results_dir=$base_dir/results
-intermediate_dir=$base_dir/tmp
-log_dir=$base_dir/log
+results_dir=$base_dir/results/${sample_id}
+intermediate_dir=$base_dir/tmp/${sample_id}
+log_dir=$base_dir/log/${sample_id}
 cluster_yaml=config/cluster.yaml
 pipeline_config=config/pipeline.yaml
 
@@ -31,7 +31,8 @@ cmd="$cmd --skip-script-cleanup"
 cmd="$cmd --cluster-config $cluster_yaml"
 cmd="$cmd --cluster \"${CLUSTER_CMD}\""
 cmd="$cmd --cluster-cancel bkill"
-cmd="$cmd --rerun-incomplete --dry-run" #--dag
+cmd="$cmd --rerun-incomplete"
+#cmd="$cmd --dry-run" #--dag
 
 echo $cmd
 eval $cmd
