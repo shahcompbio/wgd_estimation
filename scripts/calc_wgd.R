@@ -9,7 +9,10 @@ averageHom <- function(bb){
 
 # function from https://github.com/gerstung-lab/PCAWG-11/blob/master/code/PCAWG-functions.R
 # heuristic developed in PCAWG-11
-.classWgd <- function(ploidy, hom) 2.9 -2*hom <= ploidy
+#.classWgd <- function(ploidy, hom) 2.9 -2*hom <= ploidy
+
+# heuristic from Andrew
+.classWgd <- function(ploidy, hom) 2.8 - (1.1/0.85)*hom <= ploidy
 
 
 readCnTable <- function(cn_path, clonal_freq) {
