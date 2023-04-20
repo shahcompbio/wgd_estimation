@@ -1,3 +1,4 @@
+.ipynb*
 .snakemake
 OV-081*
 debug.R
