@@ -1,4 +1,5 @@
 library(argparse)
+library(GenomicRanges)
 
 # function from https://github.com/gerstung-lab/PCAWG-11/blob/master/code/PCAWG-functions.R
 averageHom <- function(bb){
