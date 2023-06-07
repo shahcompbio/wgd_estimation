@@ -1,5 +1,5 @@
 # Calc WGD pipeline
-A simple pipeline for running estimating WGD status with Isabl consensus somatic maf and ReMixT post-processing results.
+A simple pipeline for running estimating WGD status with Isabl ReMixT post-processing results.
 
 ## Install
 Cloning the directory is enough. However, you need to provide an accurate Isabl sample ID. See example in the next section.
