@@ -4,9 +4,9 @@ import pandas as pd
 class RunInfo:
     def __init__(self, config):
         self.metadata = pd.read_csv(config['metadata'], sep='\t')
-        self.metadata = self.metadata[self.metadata['isabl_sample_id'] == config['sample_id']]
+        #self.metadata = self.metadata[self.metadata['isabl_sample_id'] == config['sample_id']]
         sample_ids = set(self.metadata.query('sample_category == "TUMOR"')['isabl_sample_id'].unique())
-        self.metadata = self.metadata[self.metadata['isabl_application'].isin(['WGS-SOMATICCALLING', 'WGS-REMIXT-POSTPROCESS'])]
+        self.metadata = self.metadata[self.metadata['isabl_application'].isin(['WGS-REMIXT-POSTPROCESS'])]
         for app in self.metadata['isabl_application'].unique():
             app_samples = set(self.metadata.query('isabl_application == @app')['isabl_sample_id'].unique())
             if len(sample_ids.difference(app_samples)) > 0:

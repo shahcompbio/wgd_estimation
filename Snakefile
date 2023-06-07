@@ -1,8 +1,9 @@
+include: "rules/common.smk"
+include: "rules/calc_wgd.smk"
+
+SAMPLES = runinfo.sample_ids
 
 rule all:
     input:
-        os.path.join(config['results_dir'], f'{config["sample_id"]}.wgd.tsv'),
+        expand(os.path.join(config['results_dir'], '{sample_id}.wgd.tsv'), sample_id=SAMPLES),
 
-include: "rules/common.smk"
-include: "rules/process_variants.smk"
-include: "rules/calc_wgd.smk"

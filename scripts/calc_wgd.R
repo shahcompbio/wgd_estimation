@@ -1,6 +1,4 @@
 library(argparse)
-library(MutationTimeR)
-
 
 # function from https://github.com/gerstung-lab/PCAWG-11/blob/master/code/PCAWG-functions.R
 averageHom <- function(bb){
@@ -31,9 +29,8 @@ readCnTable <- function(cn_path, clonal_freq) {
 }
 
 get_args <- function() {
-    p <- ArgumentParser(description = "Run MutationTimeR and plot results")
+    p <- ArgumentParser(description = "Calculate WGD status from copy number, purity and ploidy")
 
-    p$add_argument("vcf", help = "vcf including t_ref_count and t_alt_count")
     p$add_argument("cn", help = "CN tsv file with columns: chromosome, start, end, major_1, minor_1")
     p$add_argument("cf", help = "Clonal frequency (purity)")
     p$add_argument("ploidy", help = "Ploidy")
@@ -47,7 +44,6 @@ get_args <- function() {
 main <- function() {
     argv <- get_args()
 
-    vcf <- readVcf(argv$vcf) # vcf path
     clonal_freq <- as.numeric(argv$cf) # purity
     ploidy <- as.numeric(argv$ploidy) # ploidy
     print("[LOG] ploidy") 
